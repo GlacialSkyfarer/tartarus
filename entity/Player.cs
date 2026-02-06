@@ -100,6 +100,10 @@ public partial class Player : CharacterBody3D
     }
 
     public override void _Process(double delta) {
+        if (Input.IsActionJustPressed("pause"))
+        {
+            Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Captured ? Input.MouseModeEnum.Visible : Input.MouseModeEnum.Captured;
+        }
         _inputState.Update(delta, null);
         _currentState = _currentState.Process(delta, this);
         Camera3D currentCamera = CurrentCamera();
