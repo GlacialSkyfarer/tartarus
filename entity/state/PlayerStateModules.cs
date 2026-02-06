@@ -25,9 +25,14 @@ public partial class WalkingModule : PlayerStateModule {
         float speed = player.GetSpeed();
         float acceleration = player.GetAcceleration();
 
-        velocity = velocity.MoveToward(new Vector3(movementInput.X * speed, velocity.Y, movementInput.Y * speed), acceleration * (float)delta);
+        Vector3 movementVector = new Vector3(movementInput.X * speed, velocity.Y, movementInput.Y * speed);
+        movementVector = player.ToCameraRelative(movementVector);
+
+        velocity = velocity.MoveToward(movementVector, acceleration * (float)delta);
 
         player.Velocity = velocity;
+
+        player.SetWalkTilt(-movementInput.X);
     }
 }
 
@@ -64,5 +69,22 @@ public partial class GroundJumpModule : PlayerStateModule {
             player.Velocity = new Vector3(player.Velocity.X, player.GetJumpForce(), player.Velocity.Z);
             player.SetJustJumped();
         }
+    }
+}
+
+public partial class CameraModule : PlayerStateModule {
+    private CameraModule() {}
+    private static CameraModule _instance;
+    public static CameraModule Get() {
+        _instance ??= new CameraModule();
+        return _instance;
+    }
+
+    public override void Process(PlayerState state, double delta, Player player)
+    {
+        base.Process(state, delta, player);
+        PlayerInputState inputState = player.GetInputState();
+        Vector2 mouseMotion = inputState.GetMouseMotion();
+        player.RotateCamera(new Vector3(-mouseMotion.Y * 0.001f, -mouseMotion.X * 0.001f, 0));
     }
 }

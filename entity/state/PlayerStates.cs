@@ -32,6 +32,7 @@ public partial class StandingState : PlayerState {
         _modules.Add(WalkingModule.Get());
         _modules.Add(GravityModule.Get());
         _modules.Add(GroundJumpModule.Get());
+        _modules.Add(CameraModule.Get());
     }
 
     private static StandingState _instance;
@@ -60,6 +61,7 @@ public partial class FallingState : PlayerState {
     protected FallingState() { 
         _modules.Add(WalkingModule.Get());
         _modules.Add(GravityModule.Get());
+        _modules.Add(CameraModule.Get());
     }
     public static FallingState Get(bool jumping = false) {
         FallingState state = new()

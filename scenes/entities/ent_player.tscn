@@ -25,14 +25,20 @@ radius = 0.15039063
 height = 0.77197266
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_xw512"]
+margin = 0.001
+length = 1.5
 
 [node name="Player" type="Node3D" unique_id=595163945]
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=422895540]
 script = ExtResource("1_wbpx3")
-_baseSpeed = 4.0
-_baseAccelerationTime = 0.2
+p_cameraHolder = NodePath("CameraRotator")
+_baseAccelerationTime = 0.15
 _baseJumpHeight = 1.0
+_cameraVerticalSensitivity = 5.0
+_cameraHorizontalSensitivity = 6.0
+_cameraMinimumX = -60.0
+_cameraMaximumX = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=422177487]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -42,17 +48,21 @@ mesh = SubResource("QuadMesh_tk3mu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01401367, 0)
 shape = SubResource("CapsuleShape3D_in5e5")
 
-[node name="CameraArm" type="SpringArm3D" parent="Player" unique_id=2040959205]
-transform = Transform3D(0.753542, -0.32540148, 0.5712164, 0.15402058, 0.932106, 0.32780516, -0.6391025, -0.1590358, 0.75249946, 0, 0, 0)
+[node name="CameraRotator" type="Node3D" parent="Player" unique_id=1396561029]
+
+[node name="CameraArm" type="SpringArm3D" parent="Player/CameraRotator" unique_id=2040959205]
+transform = Transform3D(0.870305, -0.2827333, 0.40327477, 0.17948374, 0.9445741, 0.27489182, -0.45864397, -0.1668584, 0.87281346, 0, 0, 0)
 collision_mask = 256
 shape = SubResource("SeparationRayShape3D_xw512")
-spring_length = 1.8
+spring_length = 1.5
+margin = 0.001
 
-[node name="CameraTarget" type="Node3D" parent="Player/CameraArm" unique_id=453977316]
+[node name="CameraTarget" type="Node3D" parent="Player/CameraRotator/CameraArm" unique_id=453977316]
 
 [node name="CameraHolder" type="Node3D" parent="." unique_id=1190742222]
 script = ExtResource("3_xw512")
-p_target = NodePath("../Player/CameraArm/CameraTarget")
+p_positionTarget = NodePath("../Player/CameraRotator/CameraArm/CameraTarget")
+p_rotationTarget = NodePath("../Player/CameraRotator")
 
 [node name="Camera" type="Camera3D" parent="CameraHolder" unique_id=1083514571]
 fov = 90.0

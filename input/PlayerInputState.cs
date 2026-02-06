@@ -1,3 +1,4 @@
+using System.Security.Principal;
 using Godot;
 
 public class PlayerInputState {
@@ -15,6 +16,7 @@ public class PlayerInputState {
     private float _yMovementAxis = 0f;
     private Vector2 _movementAxis = Vector2.Zero;
     private float _jumpBuffer = 0f;
+    private Vector2 _mouseMotion = Vector2.Zero;
     
     public bool IsJumping() {
         return _jumpBuffer > 0;
@@ -34,13 +36,24 @@ public class PlayerInputState {
         return _movementAxis.Normalized();
     }
 
-    public void Update(double delta, InputEvent inputEvent) {
-        if (inputEvent == null) {
+    public Vector2 GetMouseMotion() {
+        return _mouseMotion;
+    }
+
+    public void Update(double delta, InputEvent @event) {
+        if (@event is InputEventMouseMotion motion) {
+            _mouseMotion = motion.ScreenRelative;
+        }
+        if (@event == null) {
             _xMovementAxis = Input.GetAxis(MOVEMENT_LEFT, MOVEMENT_RIGHT);
             _yMovementAxis = Input.GetAxis(MOVEMENT_UP, MOVEMENT_DOWN);
             _jumpBuffer -= (float)delta;
             
             if (Input.IsActionJustPressed(JUMP)) _jumpBuffer = JUMP_BUFFER_MAX;
         }
+    }
+
+    public void ResetMouse() {
+        _mouseMotion = Vector2.Zero;
     }
 }
