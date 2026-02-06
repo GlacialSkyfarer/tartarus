@@ -49,6 +49,12 @@ public partial class StandingState : PlayerState {
             return FallingState.Get(player.GetJustJumped());
         }
 
+        if (player.GetInputState().IsWalking()) {
+            player.PlayAnimation("Run", player.Velocity.Length() / player.GetSpeed());
+        } else {
+            player.PlayAnimation("Idle");
+        }
+
         return this;
     }
 }
@@ -74,10 +80,16 @@ public partial class FallingState : PlayerState {
     public override PlayerState PhysicsProcess(double delta, Player player)
     {
         base.PhysicsProcess(delta, player);
-    
-        if (_jumping && player.Velocity.Y > 0 && player.GetInputState().JumpCut()) {
-            player.Velocity = new Vector3(player.Velocity.X, player.Velocity.Y * CUT_FACTOR, player.Velocity.Z);
-            _jumping = false;
+
+        if (_jumping) {
+            if (player.Velocity.Y <= 0) _jumping = false;
+            if (player.GetInputState().JumpCut()) {
+                player.Velocity = new Vector3(player.Velocity.X, player.Velocity.Y * CUT_FACTOR, player.Velocity.Z);
+                _jumping = false;
+            }
+            player.PlayAnimation("Jump");
+        } else {
+            player.PlayAnimation("Fall");
         }
 
         if (player.IsOnFloor()) {

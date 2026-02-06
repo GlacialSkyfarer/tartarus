@@ -13,6 +13,7 @@ shading_mode = 2
 diffuse_mode = 3
 specular_mode = 2
 albedo_texture = ExtResource("2_c8jo8")
+uv1_scale = Vector3(0.333, 0.5, 0.333)
 texture_filter = 0
 disable_receive_shadows = true
 billboard_mode = 2
@@ -28,20 +29,81 @@ height = 0.77197266
 margin = 0.001
 length = 1.5
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw512"]
+atlas = ExtResource("2_c8jo8")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk3mu"]
+atlas = ExtResource("2_c8jo8")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_in5e5"]
+atlas = ExtResource("2_c8jo8")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_beqtd"]
+atlas = ExtResource("2_c8jo8")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgavl"]
+atlas = ExtResource("2_c8jo8")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gl54y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xw512")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk3mu")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_in5e5")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_beqtd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lgavl")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 10.0
+}]
+
 [node name="Player" type="Node3D" unique_id=595163945]
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=422895540]
 script = ExtResource("1_wbpx3")
 p_cameraHolder = NodePath("CameraRotator")
+p_tempSprite = NodePath("AnimatedSprite3D")
 _baseAccelerationTime = 0.15
 _baseJumpHeight = 1.0
 _cameraVerticalSensitivity = 5.0
 _cameraHorizontalSensitivity = 6.0
 _cameraMinimumX = -60.0
 _cameraMaximumX = 50.0
+_walkTiltAmount = 3.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=422177487]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+visible = false
 mesh = SubResource("QuadMesh_tk3mu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=248812823]
@@ -58,6 +120,17 @@ spring_length = 1.5
 margin = 0.001
 
 [node name="CameraTarget" type="Node3D" parent="Player/CameraRotator/CameraArm" unique_id=453977316]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Player" unique_id=1009977411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11264107, 0)
+pixel_size = 0.015625
+billboard = 2
+shaded = true
+double_sided = false
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_gl54y")
+animation = &"Run"
+frame_progress = 0.08336124
 
 [node name="CameraHolder" type="Node3D" parent="." unique_id=1190742222]
 script = ExtResource("3_xw512")

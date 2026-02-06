@@ -12,7 +12,8 @@ public partial class Player : CharacterBody3D
     [ExportGroup("Nodes")]
     [Export] private NodePath p_cameraHolder;
     private Node3D _cameraHolder;
-
+    [Export] private NodePath p_tempSprite;
+    private AnimatedSprite3D _tempSprite; 
     [ExportGroup("Variables")]
     [Export] private float _baseSpeed = 5.0f;
     [Export] private float _baseAccelerationTime = 0.5f;
@@ -56,13 +57,16 @@ public partial class Player : CharacterBody3D
     }
 
     public Vector3 ToCameraRelative(Vector3 input) {
-        
         return input.Rotated(Vector3.Up, CurrentCamera().GlobalRotation.Y);
     }
 
     public Camera3D CurrentCamera() {
         _currentCamera ??= GetViewport().GetCamera3D();
         return _currentCamera;
+    }
+
+    public void PlayAnimation(string animation, float speed = 1f) {
+        _tempSprite.Play(animation, speed);
     }
 
     public float GetSpeed() {
@@ -89,6 +93,7 @@ public partial class Player : CharacterBody3D
     public override void _Ready()
     {
         base._Ready();
+        _tempSprite = GetNode<AnimatedSprite3D>(p_tempSprite);
         _cameraHolder = GetNode<Node3D>(p_cameraHolder);
         _currentState = StandingState.Get();
         Input.MouseMode = Input.MouseModeEnum.Captured;

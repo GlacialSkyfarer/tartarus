@@ -40,6 +40,10 @@ public class PlayerInputState {
         return _mouseMotion;
     }
 
+    public bool IsWalking() {
+        return _movementAxis != Vector2.Zero;
+    }
+
     public void Update(double delta, InputEvent @event) {
         if (@event is InputEventMouseMotion motion) {
             _mouseMotion = motion.ScreenRelative;
