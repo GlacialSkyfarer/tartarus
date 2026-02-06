@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://drd0qs4qmwfnn"]
+
+[ext_resource type="Script" uid="uid://pe1gd8oapdul" path="res://entity/Player.cs" id="1_wbpx3"]
+[ext_resource type="Texture2D" uid="uid://bawcohlw1wq30" path="res://textures/tex_peanut.png" id="2_c8jo8"]
+[ext_resource type="Texture2D" uid="uid://bq5iyfnwwh7dc" path="res://textures/tex_checker.png" id="3_c8jo8"]
+[ext_resource type="Script" uid="uid://bggalv2c64rjm" path="res://entity/CameraHolder.cs" id="3_xw512"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xw512"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("2_c8jo8")
+texture_filter = 0
+disable_receive_shadows = true
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_tk3mu"]
+material = SubResource("StandardMaterial3D_xw512")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_in5e5"]
+radius = 0.15039063
+height = 0.77197266
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_xw512"]
+
+[node name="Player" type="Node3D" unique_id=595163945]
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=422895540]
+script = ExtResource("1_wbpx3")
+_baseSpeed = 4.0
+_baseAccelerationTime = 0.2
+_baseJumpHeight = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=422177487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("QuadMesh_tk3mu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=248812823]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01401367, 0)
+shape = SubResource("CapsuleShape3D_in5e5")
+
+[node name="CameraArm" type="SpringArm3D" parent="Player" unique_id=2040959205]
+transform = Transform3D(0.753542, -0.32540148, 0.5712164, 0.15402058, 0.932106, 0.32780516, -0.6391025, -0.1590358, 0.75249946, 0, 0, 0)
+collision_mask = 256
+shape = SubResource("SeparationRayShape3D_xw512")
+spring_length = 1.8
+
+[node name="CameraTarget" type="Node3D" parent="Player/CameraArm" unique_id=453977316]
+
+[node name="CameraHolder" type="Node3D" parent="." unique_id=1190742222]
+script = ExtResource("3_xw512")
+p_target = NodePath("../Player/CameraArm/CameraTarget")
+
+[node name="Camera" type="Camera3D" parent="CameraHolder" unique_id=1083514571]
+fov = 90.0
+
+[node name="Crosshair" type="TextureRect" parent="CameraHolder/Camera" unique_id=1449477433]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_c8jo8")
+
+[node name="AimCast" type="RayCast3D" parent="CameraHolder" unique_id=440558265]
+target_position = Vector3(0, 0, -20)
+collision_mask = 13

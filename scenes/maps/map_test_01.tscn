@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://diqtar3rdbund"]
+
+[ext_resource type="Shader" uid="uid://crhn04hta88he" path="res://shaders/sky/sdr_test_sky.gdshader" id="1_ygr8c"]
+[ext_resource type="Texture2D" uid="uid://bq5iyfnwwh7dc" path="res://textures/tex_checker.png" id="2_wln7d"]
+[ext_resource type="PackedScene" uid="uid://drd0qs4qmwfnn" path="res://scenes/entities/ent_player.tscn" id="3_u61v7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ygr8c"]
+noise_type = 3
+frequency = 0.3117
+fractal_lacunarity = 2.255
+fractal_gain = 0.86
+fractal_weighted_strength = 0.5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wln7d"]
+width = 64
+height = 64
+noise = SubResource("FastNoiseLite_ygr8c")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wj7uj"]
+shader = ExtResource("1_ygr8c")
+shader_parameter/starmap = SubResource("NoiseTexture2D_wln7d")
+shader_parameter/sky_color = Color(0.06666667, 0, 0.13333334, 1)
+shader_parameter/star_color = Color(0.4582922, 0.19035628, 0.5818366, 1)
+shader_parameter/ambient_color = Color(1, 0.36414972, 0.8058963, 1)
+shader_parameter/star_factor = 0.7599999830124801
+shader_parameter/starmap_scale = 0.065
+shader_parameter/pulsate_intensity = 0.015
+shader_parameter/pan_x = 0.01
+shader_parameter/pan_y = 0.0
+
+[sub_resource type="Sky" id="Sky_prhwa"]
+sky_material = SubResource("ShaderMaterial_wj7uj")
+
+[sub_resource type="Environment" id="Environment_6o0r0"]
+background_mode = 2
+background_color = Color(0.08627451, 0.019607844, 0.16078432, 1)
+sky = SubResource("Sky_prhwa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ygr8c"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.5411765, 0.18039216, 1, 1)
+albedo_texture = ExtResource("2_wln7d")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wln7d"]
+material = SubResource("StandardMaterial3D_ygr8c")
+size = Vector2(30, 30)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_u61v7"]
+points = PackedVector3Array(-15, 0, -15, -15, 0, 14.999998, 14.999998, 0, -15, 14.999998, 0, 14.999998)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u61v7"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.80305344, 1.6171933e-05, 0.5511347, 1)
+albedo_texture = ExtResource("2_wln7d")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_aoamm"]
+material = SubResource("StandardMaterial3D_u61v7")
+size = Vector3(1, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lul4q"]
+size = Vector3(1, 5, 1)
+
+[node name="World" type="Node3D" unique_id=390415375]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1615359226]
+environment = SubResource("Environment_6o0r0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=832087237]
+mesh = SubResource("PlaneMesh_wln7d")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=841313234]
+collision_layer = 257
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1888709082]
+shape = SubResource("ConvexPolygonShape3D_u61v7")
+
+[node name="Player" parent="." unique_id=422895540 instance=ExtResource("3_u61v7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1173729712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.5, 0)
+mesh = SubResource("BoxMesh_aoamm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2" unique_id=1550329050]
+collision_layer = 257
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D" unique_id=1540333263]
+shape = SubResource("BoxShape3D_lul4q")
