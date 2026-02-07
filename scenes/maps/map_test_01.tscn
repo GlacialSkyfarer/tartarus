@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://diqtar3rdbund"]
 
-[ext_resource type="Shader" uid="uid://crhn04hta88he" path="res://shaders/sky/sdr_test_sky.gdshader" id="1_ygr8c"]
+[ext_resource type="Shader" uid="uid://crhn04hta88he" path="res://shader/sky/sdr_test_sky.gdshader" id="1_ygr8c"]
 [ext_resource type="Texture2D" uid="uid://bq5iyfnwwh7dc" path="res://textures/tex_checker.png" id="2_wln7d"]
 [ext_resource type="PackedScene" uid="uid://drd0qs4qmwfnn" path="res://scenes/entities/ent_player.tscn" id="3_u61v7"]
 

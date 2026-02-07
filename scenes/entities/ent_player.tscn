@@ -2,8 +2,14 @@
 
 [ext_resource type="Script" uid="uid://pe1gd8oapdul" path="res://entity/Player.cs" id="1_wbpx3"]
 [ext_resource type="Texture2D" uid="uid://bawcohlw1wq30" path="res://textures/tex_peanut.png" id="2_c8jo8"]
+[ext_resource type="Script" uid="uid://snei8js88to0" path="res://weapon/Weapon.cs" id="2_fkyaa"]
+[ext_resource type="Resource" uid="uid://e4m00as77srs" path="res://data/weapons/wpn_steamgun.tres" id="3_bsnie"]
 [ext_resource type="Texture2D" uid="uid://bq5iyfnwwh7dc" path="res://textures/tex_checker.png" id="3_c8jo8"]
+[ext_resource type="Texture2D" uid="uid://pbybijxvnooj" path="res://textures/tex_peanut_shotgun_arms.png" id="3_lgavl"]
 [ext_resource type="Script" uid="uid://bggalv2c64rjm" path="res://entity/CameraHolder.cs" id="3_xw512"]
+[ext_resource type="Texture2D" uid="uid://b50ya0gkfv7nb" path="res://textures/tex_peanut_pistol_arms.png" id="4_gl54y"]
+[ext_resource type="Texture2D" uid="uid://bgyyw66eo21hj" path="res://textures/tex_peanut_shotgun.png" id="5_fkyaa"]
+[ext_resource type="Texture2D" uid="uid://cvpdpxe6m6vl2" path="res://textures/tex_peanut_pistol.png" id="6_bsnie"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xw512"]
 transparency = 2
@@ -87,19 +93,332 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibstv"]
+atlas = ExtResource("3_lgavl")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enrxs"]
+atlas = ExtResource("3_lgavl")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5382e"]
+atlas = ExtResource("3_lgavl")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lq3u"]
+atlas = ExtResource("3_lgavl")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6173"]
+atlas = ExtResource("3_lgavl")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t6sxa"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ibstv")
+}, {
+"duration": 0.6,
+"texture": SubResource("AtlasTexture_enrxs")
+}],
+"loop": true,
+"name": &"SteamgunFire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5382e")
+}],
+"loop": true,
+"name": &"SteamgunIdle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_4lq3u")
+}, {
+"duration": 1.6,
+"texture": SubResource("AtlasTexture_j6173")
+}],
+"loop": true,
+"name": &"SteamgunReload",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_gl54y")
+}],
+"loop": true,
+"name": &"Unarmed",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fiwf"]
+atlas = ExtResource("5_fkyaa")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbnbw"]
+atlas = ExtResource("5_fkyaa")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hht3u"]
+atlas = ExtResource("5_fkyaa")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17sjj"]
+atlas = ExtResource("5_fkyaa")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oka8j"]
+atlas = ExtResource("5_fkyaa")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qprjg"]
+atlas = ExtResource("6_bsnie")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5x3di"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_4fiwf")
+}, {
+"duration": 0.6,
+"texture": SubResource("AtlasTexture_fbnbw")
+}],
+"loop": true,
+"name": &"SteamgunFire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hht3u")
+}],
+"loop": true,
+"name": &"SteamgunIdle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_17sjj")
+}, {
+"duration": 1.6,
+"texture": SubResource("AtlasTexture_oka8j")
+}],
+"loop": true,
+"name": &"SteamgunReload",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qprjg")
+}],
+"loop": true,
+"name": &"Unarmed",
+"speed": 5.0
+}]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lgavl"]
+animation = &"SteamgunFire"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gl54y"]
+animation = &"SteamgunIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fkyaa"]
+animation = &"SteamgunReload"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bsnie"]
+animation = &"Unarmed"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ibstv"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_enrxs"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5382e"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fkyaa"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_4lq3u"]
+states/SteamgunFire/node = SubResource("AnimationNodeAnimation_lgavl")
+states/SteamgunFire/position = Vector2(572, -16)
+states/SteamgunIdle/node = SubResource("AnimationNodeAnimation_gl54y")
+states/SteamgunIdle/position = Vector2(564, 51)
+states/SteamgunReload/node = SubResource("AnimationNodeAnimation_fkyaa")
+states/SteamgunReload/position = Vector2(564, 112)
+states/Unarmed/node = SubResource("AnimationNodeAnimation_bsnie")
+states/Unarmed/position = Vector2(322, 100)
+transitions = ["Start", "Unarmed", SubResource("AnimationNodeStateMachineTransition_ibstv"), "SteamgunReload", "SteamgunIdle", SubResource("AnimationNodeStateMachineTransition_enrxs"), "SteamgunFire", "SteamgunIdle", SubResource("AnimationNodeStateMachineTransition_5382e"), "Unarmed", "SteamgunIdle", SubResource("AnimationNodeStateMachineTransition_fkyaa")]
+graph_offset = Vector2(-32, -62)
+
+[sub_resource type="Animation" id="Animation_j6173"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Body/Gun:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Unarmed"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Body/Arms:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Unarmed"]
+}
+
+[sub_resource type="Animation" id="Animation_t6sxa"]
+resource_name = "SteamgunFire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Body/Gun:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SteamgunFire"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Body/Arms:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SteamgunFire"]
+}
+
+[sub_resource type="Animation" id="Animation_4fiwf"]
+resource_name = "SteamgunIdle"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Body/Arms:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SteamgunIdle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Body/Gun:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SteamgunIdle"]
+}
+
+[sub_resource type="Animation" id="Animation_fbnbw"]
+resource_name = "SteamgunReload"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Body/Arms:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SteamgunReload"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Body/Gun:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SteamgunReload"]
+}
+
+[sub_resource type="Animation" id="Animation_hht3u"]
+resource_name = "Unarmed"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Body/Gun:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Unarmed"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Body/Arms:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Unarmed"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_17sjj"]
+_data = {
+&"RESET": SubResource("Animation_j6173"),
+&"SteamgunFire": SubResource("Animation_t6sxa"),
+&"SteamgunIdle": SubResource("Animation_4fiwf"),
+&"SteamgunReload": SubResource("Animation_fbnbw"),
+&"Unarmed": SubResource("Animation_hht3u")
+}
+
 [node name="Player" type="Node3D" unique_id=595163945]
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=422895540]
 script = ExtResource("1_wbpx3")
 p_cameraHolder = NodePath("CameraRotator")
-p_tempSprite = NodePath("AnimatedSprite3D")
+p_tempSprite = NodePath("Body")
+p_gunAnimator = NodePath("WeaponAnimator")
 _baseAccelerationTime = 0.15
 _baseJumpHeight = 1.0
 _cameraVerticalSensitivity = 5.0
-_cameraHorizontalSensitivity = 6.0
-_cameraMinimumX = -60.0
-_cameraMaximumX = 50.0
+_cameraHorizontalSensitivity = 5.0
 _walkTiltAmount = 3.0
+_weapons = Array[ExtResource("2_fkyaa")]([ExtResource("3_bsnie")])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=422177487]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -121,7 +440,7 @@ margin = 0.001
 
 [node name="CameraTarget" type="Node3D" parent="Player/CameraRotator/CameraArm" unique_id=453977316]
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Player" unique_id=1009977411]
+[node name="Body" type="AnimatedSprite3D" parent="Player" unique_id=1009977411]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11264107, 0)
 pixel_size = 0.015625
 billboard = 2
@@ -131,6 +450,38 @@ texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_gl54y")
 animation = &"Run"
 frame_progress = 0.08336124
+
+[node name="Arms" type="AnimatedSprite3D" parent="Player/Body" unique_id=54976089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.001)
+pixel_size = 0.015625
+billboard = 2
+shaded = true
+double_sided = false
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_t6sxa")
+animation = &"SteamgunIdle"
+autoplay = "Unarmed"
+frame_progress = 0.26461488
+
+[node name="Gun" type="AnimatedSprite3D" parent="Player/Body" unique_id=1632137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.001)
+pixel_size = 0.015625
+billboard = 2
+shaded = true
+double_sided = false
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_5x3di")
+animation = &"SteamgunIdle"
+autoplay = "Unarmed"
+frame_progress = 0.26461488
+
+[node name="WeaponAnimator" type="AnimationTree" parent="Player" unique_id=2026140951]
+root_node = NodePath(".")
+tree_root = SubResource("AnimationNodeStateMachine_4lq3u")
+anim_player = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/WeaponAnimator" unique_id=37166023]
+libraries/ = SubResource("AnimationLibrary_17sjj")
 
 [node name="CameraHolder" type="Node3D" parent="." unique_id=1190742222]
 script = ExtResource("3_xw512")

@@ -10,6 +10,9 @@ public class PlayerInputState {
 
     private const string JUMP = "jump";
 
+    private const string FIRE = "fire";
+    private const string ALT_FIRE = "alt_fire";
+
     private const float JUMP_BUFFER_MAX = 0.15f;
 
     private float _xMovementAxis = 0f;
@@ -24,6 +27,12 @@ public class PlayerInputState {
 
     public bool JumpCut() {
         return !Input.IsActionPressed(JUMP);
+    }
+    public bool JustFired() {
+        return Input.IsActionJustPressed(FIRE);
+    }
+    public bool JustAltFired() {
+        return Input.IsActionJustPressed(ALT_FIRE);
     }
 
     public void ClearJumpBuffer() {

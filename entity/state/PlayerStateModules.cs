@@ -25,7 +25,7 @@ public partial class WalkingModule : PlayerStateModule {
         float speed = player.GetSpeed();
         float acceleration = player.GetAcceleration();
 
-        Vector3 movementVector = new Vector3(movementInput.X * speed, velocity.Y, movementInput.Y * speed);
+        Vector3 movementVector = new(movementInput.X * speed, velocity.Y, movementInput.Y * speed);
         movementVector = player.ToCameraRelative(movementVector);
 
         velocity = velocity.MoveToward(movementVector, acceleration * (float)delta);

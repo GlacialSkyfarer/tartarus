@@ -14,6 +14,10 @@ public partial class Player : CharacterBody3D
     private Node3D _cameraHolder;
     [Export] private NodePath p_tempSprite;
     private AnimatedSprite3D _tempSprite; 
+    [Export] private NodePath p_gunAnimator;
+    private AnimationTree _gunAnimator;
+    private AnimationNodeStateMachinePlayback _gunStateMachine;
+
     [ExportGroup("Variables")]
     [Export] private float _baseSpeed = 5.0f;
     [Export] private float _baseAccelerationTime = 0.5f;
@@ -27,6 +31,9 @@ public partial class Player : CharacterBody3D
 
     [Export] private float _walkTiltAmount = 10f;
     [Export] private float _walkTiltTime = 0.25f;
+
+    [Export] private Godot.Collections.Array<Weapon> _weapons = [];
+    private int _currentWeapon = 0;
 
     private Camera3D _currentCamera;
     private float _walkTilt = 0f;
@@ -68,6 +75,9 @@ public partial class Player : CharacterBody3D
     public void PlayAnimation(string animation, float speed = 1f) {
         _tempSprite.Play(animation, speed);
     }
+    public void PlayGunAnimation(string animation) {
+        _gunStateMachine.Travel(animation);
+    }
 
     public float GetSpeed() {
         return _baseSpeed;
@@ -95,8 +105,15 @@ public partial class Player : CharacterBody3D
         base._Ready();
         _tempSprite = GetNode<AnimatedSprite3D>(p_tempSprite);
         _cameraHolder = GetNode<Node3D>(p_cameraHolder);
+        _gunAnimator = GetNode<AnimationTree>(p_gunAnimator);
+        _gunStateMachine = (AnimationNodeStateMachinePlayback)_gunAnimator.Get("parameters/playback");
         _currentState = StandingState.Get();
         Input.MouseMode = Input.MouseModeEnum.Captured;
+
+        foreach (Weapon w in _weapons) {
+            w.CallDeferred("Init", this);
+        }
+        _weapons[_currentWeapon].CallDeferred("SwitchIn", this);
     }
 
     public override void _Process(double delta) {
@@ -109,6 +126,10 @@ public partial class Player : CharacterBody3D
         Camera3D currentCamera = CurrentCamera();
         float cameraZ = Mathf.Lerp(currentCamera.Rotation.Z, Mathf.DegToRad(_walkTilt * _walkTiltAmount), (float)delta / _walkTiltTime);
         currentCamera.Rotation = new(currentCamera.Rotation.X, currentCamera.Rotation.Y, cameraZ);
+        _weapons[_currentWeapon].Process(delta, this);
+        if (_inputState.JustFired()) {
+            _weapons[_currentWeapon].Fire(this);
+        } 
         CallDeferred("LateProcess");
     }
 
